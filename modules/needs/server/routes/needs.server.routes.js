@@ -12,6 +12,7 @@ module.exports = function(app) {
     .get(needs.list)
     .post(needs.create);
 
+//Single need routes
   app.route('/api/needs/:needId').all(needsPolicy.isAllowed)
     .get(needs.read)
     .put(needs.update)

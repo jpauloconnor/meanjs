@@ -1,14 +1,8 @@
-//Needs service used to communicate Needs REST endpoints
-(function () {
-  'use strict';
+'use strict';
 
-  angular
-    .module('needs')
-    .factory('NeedsService', NeedsService);
-
-  NeedsService.$inject = ['$resource'];
-
-  function NeedsService($resource) {
+//Needs service used for communicating with the needs REST endpoints
+angular.module('needs').factory('Needs', ['$resource',
+  function ($resource) {
     return $resource('api/needs/:needId', {
       needId: '@_id'
     }, {
@@ -17,4 +11,4 @@
       }
     });
   }
-})();
+]);

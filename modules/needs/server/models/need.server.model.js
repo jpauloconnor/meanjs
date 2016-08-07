@@ -7,53 +7,25 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
- * Need Schema
+ * Article Schema
  */
 var NeedSchema = new Schema({
-  title: {
-    type: String,
-    default: '',
-    required: 'Please provide a title',
-    trim: true
-  },
-  description: {
-    type: String,
-    default: '',
-    required: 'Please provide a description',
-    trim: true
-  },
-  organization: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  location: {
-    type: String,
-    default: '',
-    trim: true
-  },
-  startDate: {
-    type: Date
-  },
-  endDate: {
-    type: Date
-  },
-  numberNeeded: {
-    type: Number,
-    default: 1
-  },
-  volunteers: [
-    { user: Schema.ObjectId}
-  ],
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  createdOn: {
+  created: {
     type: Date,
     default: Date.now
   },
-  createdBy: {
+  title: {
+    type: String,
+    default: '',
+    trim: true,
+    required: 'Title cannot be blank'
+  },
+  content: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  user: {
     type: Schema.ObjectId,
     ref: 'User'
   }

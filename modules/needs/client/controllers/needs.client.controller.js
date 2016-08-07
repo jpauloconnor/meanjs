@@ -1,53 +1,68 @@
-(function () {
-  'use strict';
+'use strict';
 
-  // Needs controller
-  angular
-    .module('needs')
-    .controller('NeedsController', NeedsController);
+// Needs controller
+angular.module('needs').controller('NeedsController', ['$scope', '$stateParams', '$location', 'Authentication', 'needs',
+  function ($scope, $stateParams, $location, Authentication, Needs) {
+    $scope.authentication = Authentication;
 
-  NeedsController.$inject = ['$scope', '$state', 'Authentication', 'needResolve'];
+    // Create new Need
+    $scope.create = function () {
+      // Create new Need object
+      var need = new Needs({
+        title: this.title,
+        content: this.content
+      });
 
-  function NeedsController ($scope, $state, Authentication, need) {
-    var vm = this;
+      // Redirect after save
+      need.$save(function (response) {
+        $location.path('needs/' + response._id);
 
-    vm.authentication = Authentication;
-    vm.need = need;
-    vm.error = null;
-    vm.form = {};
-    vm.remove = remove;
-    vm.save = save;
+        // Clear form fields
+        $scope.title = '';
+        $scope.content = '';
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
 
     // Remove existing Need
-    function remove() {
-      if (confirm('Are you sure you want to delete?')) {
-        vm.need.$remove($state.go('needs.list'));
-      }
-    }
+    $scope.remove = function (need) {
+      if (need) {
+        need.$remove();
 
-    // Save Need
-    function save(isValid) {
-      if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.needForm');
-        return false;
-      }
-
-      // TODO: move create/update logic to service
-      if (vm.need._id) {
-        vm.need.$update(successCallback, errorCallback);
+        for (var i in $scope.needs) {
+          if ($scope.needs[i] === need) {
+            $scope.needs.splice(i, 1);
+          }
+        }
       } else {
-        vm.need.$save(successCallback, errorCallback);
-      }
-
-      function successCallback(res) {
-        $state.go('needs.view', {
-          needId: res._id
+        $scope.need.$remove(function () {
+          $location.path('needs');
         });
       }
+    };
 
-      function errorCallback(res) {
-        vm.error = res.data.message;
-      }
-    }
+    // Update existing need
+    $scope.update = function () {
+      var need = $scope.need;
+
+      need.$update(function () {
+        $location.path('needs/' + need._id);
+      }, function (errorResponse) {
+        $scope.error = errorResponse.data.message;
+      });
+    };
+
+    // Find a list of Needs
+    $scope.find = function () {
+      $scope.needs = Needs.query();
+    };
+
+    // Find existing need
+    $scope.findOne = function () {
+      $scope.need = Needs.get({
+        needId: $stateParams.needId
+      });
+    };
   }
-})();
+]);
