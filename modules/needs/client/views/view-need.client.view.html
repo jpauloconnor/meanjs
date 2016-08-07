@@ -1,0 +1,22 @@
+<section data-ng-controller="NeedsController" data-ng-init="findOne()">
+  <div class="page-header">
+    <h1 data-ng-bind="need.title"></h1>
+  </div>
+  <div class="pull-right" data-ng-show="authentication.user._id == need.user._id">
+    <a class="btn btn-primary" data-ui-sref="needs.edit({needId: need._id})">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn btn-primary" data-ng-click="remove();">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span data-ng-bind="need.created | date:'mediumDate'"></span>
+      by
+      <span data-ng-bind="need.user.displayName"></span>
+    </em>
+  </small>
+  <p class="lead" data-ng-bind="need.content"></p>
+</section>
