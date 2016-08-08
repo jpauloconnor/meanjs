@@ -12,9 +12,27 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label" for="content">Content</label>
+          <label class="control-label" for="description">Description</label>
           <div class="controls">
-            <textarea name="content" data-ng-model="content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+            <textarea name="description" data-ng-model="description" id="description" class="form-control" cols="30" rows="5" placeholder="Description"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="location">Location</label>
+          <div class="controls">
+            <input name="location" type="text" data-ng-model="location" id="location" class="form-control" placeholder="Location">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="numberNeeded">Number Needed</label>
+          <div class="controls">
+            <input name="numberNeeded" type="text" data-ng-model="numberNeeded" id="numberNeeded" class="form-control" placeholder="Number Needed">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="startDate">Start Date</label>
+          <div class="controls">
+            <input name="startDate" type="text" data-ng-model="startDate" id="startDate" class="form-control" placeholder="Start Date">
           </div>
         </div>
         <div class="form-group">
@@ -27,3 +45,12 @@
     </form>
   </div>
 </section>
+
+<!-- $scope.title = '';
+        $scope.description = '';
+        $scope.organization = '';
+        $scope.location = '';
+        $scope.numberNeeded = 1;
+        $scope.startDate = Date.now;
+        $scope.endDate = null;
+        -->
